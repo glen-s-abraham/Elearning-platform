@@ -1,0 +1,25 @@
+<form action="{%url 'updateCourse'%}" method="get" >
+	  
+	<select name="course">
+		{%for course in courseslist%}
+			<option value="{{course.id}}">{{course}}</option>
+		{%endfor%}
+	</select>
+	
+	<input type="submit" name="Course" value="Select">
+	
+	
+</form>
+
+<form action="{%url 'updateCourse'%}" method="post">
+    {% csrf_token %}
+    
+    
+    <input type="hidden" name="courseid" value="{{id}}">
+    
+    
+    {{ form }}
+    <input type="submit" value="Submit" name="Update">
+</form>
+
+

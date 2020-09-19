@@ -1,0 +1,6 @@
+<form enctype="multipart/form-data" action="{%url 'updateLesson'%}" method='post'>
+{% csrf_token %}
+<input type="hidden" name="lid" value="{{lid}}">
+{{form}}
+<input type="submit" name="Update" vaule="Update">
+</form>

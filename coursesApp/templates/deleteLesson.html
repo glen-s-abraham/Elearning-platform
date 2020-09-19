@@ -1,0 +1,8 @@
+<form action="{%url 'deleteLesson'%}" method="post">
+	{%csrf_token%}
+	<input type="hidden" name="lid" value="{{lesson.id}}">
+	Delete {{lesson.lessonname}} From {{lesson.course}}?
+	<input type="submit" name="Delete" value="Delete">
+	
+
+</form>

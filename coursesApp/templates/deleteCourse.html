@@ -1,0 +1,12 @@
+<form action="{%url 'deleteCourse'%}" method="post" name="courseselection">
+	  {% csrf_token %}
+	<select name="course">
+		{%for course in courseslist%}
+			<option value="{{course.id}}">{{course}}</option>
+		{%endfor%}
+	</select>
+	
+	<input type="submit" name="Delete" value="Delete">
+	
+	
+</form>

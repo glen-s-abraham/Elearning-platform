@@ -1,0 +1,17 @@
+<form action="{%url 'createLesson'%}" method='get'>
+	<select name="course">
+		{%for course in courses%}
+		<option value="{{course.id}}">{{course.title}}</option>
+		{%endfor%}
+	</select>
+	<input type="submit" name="Select" value="Select">
+</form>
+<form enctype="multipart/form-data" action="{%url 'createLesson'%}" method='post'>
+	  {% csrf_token %}
+	  <label>Course</label>
+	  <input type="text" value="{{course.title}}" disabled>
+	  
+	  <input type="hidden" name="cid" value="{{course.id}}">
+	  {{form}}
+	  <input type="submit" name="Add" value="Add">
+</form>
