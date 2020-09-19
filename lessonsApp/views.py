@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from lessonsApp.models import Lessons
 from coursesApp.models import Courses
 from django.contrib.auth.models import User
@@ -50,6 +50,7 @@ def createLesson(request):
 						lesson=form.save(commit=False)
 						lesson.course=course
 						lesson.save()
+						return redirect(lessons)
 
 
 
@@ -86,8 +87,8 @@ def updateLesson(request,id=-1):
 					lesson=form.save(commit=False)
 					lesson.course=course
 					lesson.save()
-					print(lesson)
-					print(request.FILES)
+					return redirect(lessons)
+					
 
 				
 		
@@ -95,6 +96,7 @@ def updateLesson(request,id=-1):
 	if lid:
 		context['lid']=lid
 	return render(request,'updateLesson.html',context)
+	
 
 @login_required(login_url='login')
 def deleteLesson(request,id=-1):
@@ -111,6 +113,7 @@ def deleteLesson(request,id=-1):
 			if id:
 				lesson=Lessons.objects.get(pk=id)
 				lesson.delete()
+				return redirect(lessons)
 	
 	
 	return render(request,'deleteLesson.html',context)		

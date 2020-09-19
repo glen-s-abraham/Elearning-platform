@@ -1,8 +1,14 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<h4 style="margin-bottom: 1%;">Create Course</h4>
 {%if msg%}
  {{msg}}
 {%endif%}
+{% load crispy_forms_tags %}
 <form action="{%url 'createCourse'%}" method="post">
     {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
+    {{ form|crispy }}
+    <input type="submit" value="Submit" class="btn btn-primary">
 </form>
+{%endblock%}

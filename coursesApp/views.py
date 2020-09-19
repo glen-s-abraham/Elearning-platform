@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.shortcuts import get_object_or_404
 from coursesApp.models import Courses
 from .forms import CoursesForm
@@ -20,13 +20,14 @@ def createCourse(request):
 	user=request.user
 	course=Courses
 	if request.method == 'POST':
-		print(request.POST)
+		
 		form = CoursesForm(request.POST)		
 		if form.is_valid():
 			course=form.save(commit=False)
 			course.author=user
 			course.save()
-			isCreated=True		
+			isCreated=True
+			return redirect(courses)		
 			
 	context={'form': form,'isCreated':isCreated}
 	return render(request, 'createCourse.html',context )
@@ -61,6 +62,7 @@ def updateCourse(request):
 						instance=form.save(commit=False)
 						instance.author=user
 						instance.save()
+						return redirect(courses)
 				
 			
 				

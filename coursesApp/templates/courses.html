@@ -1,5 +1,10 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<h4 style="margin-bottom: 1%;">Courses</h4>
 {%for course in courses%}
 <br>
 {{course.title}}
 </br>
 {%endfor%}
+{%endblock%}

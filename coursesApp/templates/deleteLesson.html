@@ -1,8 +1,13 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<h4 style="margin-bottom: 1%;">Delete Lesson</h4>
 <form action="{%url 'deleteLesson'%}" method="post">
 	{%csrf_token%}
 	<input type="hidden" name="lid" value="{{lesson.id}}">
 	Delete {{lesson.lessonname}} From {{lesson.course}}?
-	<input type="submit" name="Delete" value="Delete">
+	<input type="submit" name="Delete" value="Delete" class="btn btn-primary">
 	
 
 </form>
+{%endblock%}

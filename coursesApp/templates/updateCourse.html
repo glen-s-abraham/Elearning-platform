@@ -1,12 +1,19 @@
-<form action="{%url 'updateCourse'%}" method="get" >
-	  
-	<select name="course">
+{% extends 'master.html' %}
+
+{% block content %}
+
+<h4 style="margin-bottom: 1%;">Update Course</h4>
+ {% load crispy_forms_tags %}
+<form style="margin-bottom: 2%" action="{%url 'updateCourse'%}" method="get" >
+	<div class="form-group"> 
+	<select name="course" class="textinput textInput form-control">
 		{%for course in courseslist%}
 			<option value="{{course.id}}">{{course}}</option>
 		{%endfor%}
 	</select>
+</div>
 	
-	<input type="submit" name="Course" value="Select">
+<input type="submit" name="Course" value="Select" class="btn btn-secondary">
 	
 	
 </form>
@@ -18,8 +25,9 @@
     <input type="hidden" name="courseid" value="{{id}}">
     
     
-    {{ form }}
-    <input type="submit" value="Submit" name="Update">
+    {{ form|crispy }}
+    <input type="submit" value="Submit" name="Update" class="btn btn-primary">
 </form>
+{%endblock%}
 
 

@@ -1,8 +1,13 @@
-<div class="container">
+{% extends 'master.html' %}
+
+{% block content %}
+<h4 style="margin-bottom: 1%;">Login</h4>
+{% load crispy_forms_tags %}
+
         <form action="{%url 'login'%}"method="POST">
         {% csrf_token %}
-        {{form.as_p}}
-            <button  type="submit">Login</button>
+        {{form|crispy}}
+            <button  type="submit" class="btn btn-primary">Login</button>
         </form>
        
-    </div>
+{%endblock%}
