@@ -18,6 +18,7 @@ class Courses(models.Model):
 	title=models.CharField(max_length=100,unique=True)
 	course=models.CharField(max_length=20,choices=course_choices,default='BSC.CS')
 	semester=models.CharField(max_length=3,choices=semester_choices,default='S1')
+	cover = models.FileField(upload_to='Courses/')
 	def __str__(self):
 		return str(self.title)
 

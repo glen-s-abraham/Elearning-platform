@@ -21,7 +21,7 @@ def createCourse(request):
 	course=Courses
 	if request.method == 'POST':
 		
-		form = CoursesForm(request.POST)		
+		form = CoursesForm(request.POST,request.FILES)		
 		if form.is_valid():
 			course=form.save(commit=False)
 			course.author=user
@@ -57,7 +57,7 @@ def updateCourse(request):
 			if instance:
 					print(instance)
 					user=request.user
-					form = CoursesForm(request.POST,instance=instance)
+					form = CoursesForm(request.POST,request.FILES,instance=instance)
 					if form.is_valid():
 						instance=form.save(commit=False)
 						instance.author=user

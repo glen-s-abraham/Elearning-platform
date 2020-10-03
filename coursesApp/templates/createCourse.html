@@ -6,7 +6,7 @@
  {{msg}}
 {%endif%}
 {% load crispy_forms_tags %}
-<form action="{%url 'createCourse'%}" method="post">
+<form enctype="multipart/form-data" action="{%url 'createCourse'%}" method="post" >
     {% csrf_token %}
     {{ form|crispy }}
     <input type="submit" value="Submit" class="btn btn-primary">

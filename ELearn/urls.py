@@ -23,7 +23,8 @@ urlpatterns = [
     path('',include('coursesApp.urls')),
     path('lessons/',include('lessonsApp.urls')),
     path('users/',include('userApp.urls')),
-    path('api/courses/',include('courses_api.urls'))
+    path('api/courses/',include('courses_api.urls')),
+    path('api/lessons/',include('lessons_api.urls'))
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
