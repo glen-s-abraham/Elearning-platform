@@ -1,97 +1,77 @@
-from django.shortcuts import render,redirect
 from django.shortcuts import get_object_or_404
+
 from coursesApp.models import Courses
+from coursesApp.forms import CoursesForm
+
 from .forms import CoursesForm
 from django.contrib.auth.models import User
-from .models import Courses
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+from django.views.generic.list import ListView 
+from django.views.generic.detail import DetailView  
+from django.views.generic.edit import CreateView
+from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
 
 #CRUD Functionality for Courses
-@login_required(login_url='login')
-def courses(request):
-	user=request.user
-	courses=Courses.objects.filter(author=user)
-	return render(request,'courses.html',{'courses':courses})
 
-@login_required(login_url='login')
-def createCourse(request):
-	isCreated=False;
-	form = CoursesForm()
-	user=request.user
-	course=Courses
-	if request.method == 'POST':
+@method_decorator(login_required(login_url='/users/'), name='dispatch')
+class CoursesView(ListView):
+	model=Courses
+
+	def get_queryset(self):
+		user=self.request.user
+		queryset=Courses.objects.filter(author=user.id)
+		return queryset
+
+@method_decorator(login_required(login_url='/users/'), name='dispatch')
+class CoursesDetailView(DetailView):
+	model=Courses
+
+	def get_object(self):
+		id=self.kwargs.get("id")
+		return get_object_or_404(Courses,id=id)
+
+
 		
-		form = CoursesForm(request.POST,request.FILES)		
-		if form.is_valid():
-			course=form.save(commit=False)
-			course.author=user
-			course.save()
-			isCreated=True
-			return redirect(courses)		
-			
-	context={'form': form,'isCreated':isCreated}
-	return render(request, 'createCourse.html',context )
+@method_decorator(login_required(login_url='/users/'), name='dispatch')	
+class CoursesCreateView(CreateView):
+	model=Courses
+	form_class=CoursesForm
+	success_url='/'
 
-@login_required(login_url='login')	
-def updateCourse(request):
-	user=request.user
-	courseslist=Courses.objects.filter(author=user)
-	form=CoursesForm()
-	id=None
-	if request.method=='GET':
-		if 'Course' in request.GET:
-			id=request.GET['course']
-			if id:
-				instance=Courses.objects.get(pk=id)
-				if instance:
-					form=CoursesForm(instance=instance)
-	context={'courseslist':courseslist,'form':form}	
-	if id:
-		context['id']=id		
-	if request.method=='POST':
-		cid=None
-		cid=request.POST['courseid'];
-		if cid:
-			print(cid)
-			instance=Courses.objects.get(pk=cid)
-			if instance:
-					print(instance)
-					user=request.user
-					form = CoursesForm(request.POST,request.FILES,instance=instance)
-					if form.is_valid():
-						instance=form.save(commit=False)
-						instance.author=user
-						instance.save()
-						return redirect(courses)
-				
-			
-				
-		
+	def form_valid(self, form):
+		form.instance.author = self.request.user
+		return super().form_valid(form)
+        
+@method_decorator(login_required(login_url='/users/'), name='dispatch')	
+class CoursesUpdateView(UpdateView):
+
+	model=Courses
+	form_class=CoursesForm
+	template_name_suffix = '_update_form'
+	success_url='/'
+
+	def get_object(self):
+		id=self.kwargs.get("id")
+		return get_object_or_404(Courses,id=id)
+
+
+
+@method_decorator(login_required(login_url='/users/'), name='dispatch')
+class CoursesDeleteView(DeleteView):
+	model=Courses
+	template_name_suffix = '_delete'
+	success_url='/'
+
+	def get_object(self):
+		id=self.kwargs.get("id")
+		return get_object_or_404(Courses,id=id)		
+
 	
-	return render(request, 'updateCourse.html',context)
 
-@login_required(login_url='login')
-def deleteCourse(request):
-	user=request.user
-	courseslist=Courses.objects.filter(author=user)
-	context={'courseslist':courseslist}	
-	form=CoursesForm()
-	if request.method=='POST':
-		id=request.POST['course'];
-		if id:
-			print(id)
-			instance=Courses.objects.get(pk=id)
-			if instance:
-				print(instance)
-				if 'Delete' in request.POST:
-						
-					print('deleting',instance)
-					instance.delete()
 	
-	return render(request, 'deleteCourse.html',context)
-
-
-
 
 
 

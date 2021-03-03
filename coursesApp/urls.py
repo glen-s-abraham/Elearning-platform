@@ -15,12 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import views 
+from coursesApp.views import CoursesView as cv
+from coursesApp.views import CoursesDetailView as cld
+from coursesApp.views import CoursesCreateView as cc
+from coursesApp.views import CoursesUpdateView as cu
+from coursesApp.views import CoursesDeleteView as cd
 urlpatterns = [
-    path('', views.courses,name="courses"),
-    path('createCourse/', views.createCourse,name="createCourse"),
-    path('updateCourse/', views.updateCourse,name="updateCourse"),
-    path('deleteCourse/', views.deleteCourse,name="deleteCourse"),
+    path('', cv.as_view(),name="courses"),
+    path('createCourse/', cc.as_view(),name="createCourse"),
+    path('<int:id>/',cld.as_view() ,name="detailCourse"),
+    path('<int:id>/updateCourse/',cu.as_view() ,name="updateCourse"),
+    path('<int:id>/deleteCourse/', cd.as_view(),name="deleteCourse"),
     
     
 ]
+
+"""path('createCourse/', views.createCourse,name="createCourse"),
+    path('updateCourse/', views.updateCourse,name="updateCourse"),
+    path('deleteCourse/', views.deleteCourse,name="deleteCourse"),"""

@@ -15,10 +15,10 @@ semester_choices=[
 
 class Courses(models.Model):
 	author=models.ForeignKey(User, on_delete=models.CASCADE)
-	title=models.CharField(max_length=100,unique=True)
+	title=models.CharField(max_length=100)
 	course=models.CharField(max_length=20,choices=course_choices,default='BSC.CS')
 	semester=models.CharField(max_length=3,choices=semester_choices,default='S1')
-	cover = models.FileField(upload_to='Courses/')
+	cover = models.FileField(upload_to='Courses/',null=True,blank=True)
 	def __str__(self):
 		return str(self.title)
 

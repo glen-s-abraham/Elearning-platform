@@ -1,0 +1,21 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<style>
+	.center{
+		position: absolute;
+		left: 50%;
+		top: 55%;
+		transform: translate(-50%, -50%);
+	}
+</style>
+<div class="center">
+	<h3>{{object.title}} - {{object.course}} - {{object.semester}}</h3><br> 
+	{%if object.cover%}
+		<img src="{{object.cover.url}}" width="600" height="350">
+	{%endif%}
+	<br><br>
+	<a href="{%url 'courses'%}{{object.id}}/updateCourse"><button class="btn btn-primary">Update</button></a>
+	<a href="{%url 'courses'%}{{object.id}}/deleteCourse"><button class="btn btn-danger">Delete</button></a>
+</div>
+{%endblock%}

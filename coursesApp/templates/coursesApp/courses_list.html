@@ -1,0 +1,9 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<h1>Courses List</h1>
+
+{%for object in object_list%}
+<a href="{%url 'courses'%}{{object.id}}"><p>{{object.title}}</p>
+{%endfor%}
+{%endblock%}
