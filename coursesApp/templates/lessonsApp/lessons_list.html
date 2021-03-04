@@ -1,0 +1,56 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<style>
+	
+	
+	.card{
+		width:100%;
+		height:80px;
+		margin: 10px;
+		box-shadow: 3px 3px 5px;
+	}
+
+	.title{
+		width: 60%;
+		height: 20%;
+		position: absolute;
+		left:20px;
+		top:10px;
+		
+	}
+
+	.controls{
+		
+		height: 20%;
+		position: absolute;
+		right:10px;
+		top:10px;
+		padding: 2px;
+		
+		
+	}
+	
+
+	
+
+</style>
+
+<h2>{{course.title}}</h2>
+<a   href="{%url 'createLesson'%}?cid={{course.id}}" class=" btn btn-primary">Add Lesson</a>
+
+{%for lesson in lessons%}
+<div class="card">
+	<div class="title">
+		<h3>{{lesson.lessonname}}</h1>
+	</div>	
+	<div class="controls">
+		<a class="btn btn-primary" href="{%url 'updateLesson' course.id lesson.id %}">Update</a>
+		<a class="btn btn-danger" href="{%url 'deleteLesson' course.id lesson.id %}">Delete</a>
+	</div>
+
+</div>
+
+
+{%endfor%}
+{%endblock%}

@@ -1,0 +1,23 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+
+<h4 style="margin-bottom: 1%;">Create Lesson</h4>
+{% load crispy_forms_tags %}
+
+<div id="alert"></div>
+<br>
+<form  id="upload-form" enctype="multipart/form-data" action="{%url 'createLesson'%}" method='post'>
+	  {% csrf_token %}
+	  <label>Course</label>
+	  <input type="text" value="{{course.title}}" class="textinput textInput form-control" disabled>
+	  
+	  <input type="hidden" name="cid" value="{{course.id}}">
+	  {{ form|crispy }}
+	  <input type="submit" name="Add" value="Add" class="btn btn-primary">
+</form>
+
+
+
+{%endblock%}

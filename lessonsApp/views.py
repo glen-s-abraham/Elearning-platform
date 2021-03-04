@@ -1,121 +1,73 @@
 from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
 from lessonsApp.models import Lessons
 from coursesApp.models import Courses
 from django.contrib.auth.models import User
 from .forms import LessonsForm
+
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
+
 
 @login_required(login_url='login')
 def lessons(request):
-    user=request.user
-    courses=Courses.objects.filter(author=user)
-    lessons=None
+    cid=request.GET['cid']
+    course=Courses.objects.get(pk=cid)
+    lessons=Lessons.objects.filter(course=course)
+    context={'course':course,'lessons':lessons}		
+    return render(request,'lessonsApp/lessons_list.html',context)
 
-    if request.method=='GET':
-    	if 'Find' in request.GET:
-    		cid=None
-    		cid=request.GET['course']
-    		print(cid)
-    		if cid:
-    			course=Courses.objects.get(pk=cid)
-    			lessons=Lessons.objects.filter(course=course)
-    context={'courses':courses,'lessons':lessons}			
-    return render(request,'lessons.html',context)
 
 @login_required(login_url='login')
+
 def createLesson(request):
-	user=request.user
-	courses=Courses.objects.filter(author=user)
-	form=LessonsForm()
-	cid=None
-	course=None
 	if request.method=='GET':
-		if 'Select' in request.GET:
-			cid=cid=request.GET['course']
-			if cid:
-				print(cid)
-				course=Courses.objects.get(pk=cid)
-				if course:
-					print(course)
+		if 'cid' in request.GET:
+			cid=request.GET['cid']
+			course=Courses.objects.get(pk=cid)
+			form=LessonsForm()
+			context={'course':course,'form':form}	
+			return render(request,'lessonsApp/lessons_create.html',context)
+		return HttpResponse(status=404)
+			
 	if request.method=='POST':
-		if 'Add' in request.POST:
-			print(request.FILES)
-			cid=request.POST['cid']
-			if cid:
-				print(cid)
-				course=Courses.objects.get(pk=cid)
-				if course:
-					form=LessonsForm(request.POST,request.FILES)
-					if form.is_valid():
-						lesson=form.save(commit=False)
-						lesson.course=course
-						lesson.save()
-						return redirect(lessons)
+		if 'cid' in request.POST:
+			cid=request.POST.get('cid')
+			course=Courses.objects.get(pk=cid)
+			form=LessonsForm(request.POST,request.FILES)
+			if form.is_valid():
+				lesson=form.save(commit=False)
+				lesson.course=course
+				lesson.save()
+				return redirect('/lessons/?cid='+cid)				
+		return HttpResponse(status=400)	
 
+@method_decorator(login_required(login_url='/users/'), name='dispatch')	
+class LessonsUpdateView(UpdateView):
 
+	model=Lessons
+	form_class=LessonsForm
+	template_name_suffix = '_update_form'
+	success_url='/'
 
+	def get_object(self):
+		id=self.kwargs.get("id")
+		cid=self.kwargs.get("cid")
+		self.success_url='/lessons/?cid='+str(cid)
+		return get_object_or_404(Lessons,id=id)		
 
+@method_decorator(login_required(login_url='/users/'), name='dispatch')
+class LessonsDeleteView(DeleteView):
+	model=Lessons
+	template_name_suffix = '_delete'
+	success_url='/'
 
-
-	context={'courses':courses,'form':form,'course':course}
-	
-	print(context)
-	return render(request,'createLesson.html',context)
-	
-    
-
-    
-	
-@login_required(login_url='login')
-def updateLesson(request,id=-1):
-	form=LessonsForm()
-	lid=None
-	if id>0:
-		lesson=Lessons.objects.get(pk=id)
-		print(lesson)
-		form=LessonsForm(instance=lesson)
-		lid=id;
-	
-	if request.method=='POST':
-		if 'Update' in request.POST:
-			id=request.POST['lid']
-			if id:
-				lesson=Lessons.objects.get(pk=id)
-				course=lesson.course
-				form=LessonsForm(request.POST,request.FILES,instance=lesson)
-				if form.is_valid():
-					lesson=form.save(commit=False)
-					lesson.course=course
-					lesson.save()
-					return redirect(lessons)
-					
-
-				
-		
-	context={'form':form}
-	if lid:
-		context['lid']=lid
-	return render(request,'updateLesson.html',context)
-	
-
-@login_required(login_url='login')
-def deleteLesson(request,id=-1):
-	context={};
-	if id>0:
-		lesson=Lessons.objects.get(pk=id)
-		print(lesson)
-		if lesson:
-			context['lesson']=lesson;
-
-	if request.method=='POST':
-		if 'Delete' in request.POST:
-			id=request.POST['lid']
-			if id:
-				lesson=Lessons.objects.get(pk=id)
-				lesson.delete()
-				return redirect(lessons)
-	
-	
-	return render(request,'deleteLesson.html',context)		
-
-
+	def get_object(self):
+		id=self.kwargs.get("id")
+		cid=self.kwargs.get("cid")
+		self.success_url='/lessons/?cid='+str(cid)
+		return get_object_or_404(Lessons,id=id)

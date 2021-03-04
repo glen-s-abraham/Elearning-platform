@@ -1,9 +1,83 @@
 {% extends 'master.html' %}
 
 {% block content %}
-<h1>Courses List</h1>
+<style>
+	.card{
+		width:100%;
+		height:200px;
+		
+		margin: 10px;
+		box-shadow: 3px 3px 5px;
+	}
+	.thumbnail{
+		width: 30%;
+		height: 90%;
+		background-color: red;
+		margin-top: 8px;
+		margin-left: 8px;
+	}
+	.title{
+		width: 60%;
+		height: 20%;
+		position: absolute;
+		left:400px;
+		top:10px;
+		
+	}
+	.detail{
+		width: 60%;
+		height: 20%;
+		position: absolute;
+		left:400px;
+		top:80px;
+		
+	}
+	.controls{
+		width: 60%;
+		height: 20%;
+		position: absolute;
+		left:400px;
+		top:128px;
+		
+	}
+	.lessons{
+		width:10%;
+		height: 100%;
+		background-color: grey;
+		position: absolute;
+		left:1000px;
+		top:0px;
+		right: 10px;
+	}
+	.button{
+		position: absolute;
+		top:60px;
+		right:20px;
+	}
+
+</style>	
 
 {%for object in object_list%}
-<a href="{%url 'courses'%}{{object.id}}"><p>{{object.title}}</p>
+<div class="card">
+	{%if object.cover%}
+		<img class="thumbnail" src="{{object.cover.url}}">
+	{%endif%}	
+	<div class="title">
+		<h3>{{object.title}}
+	</div>
+	<div class="detail">
+		<h5>{{object.course}}-{{object.semester}}</h5>
+	</div>
+	<div class="controls">
+		<a href="{%url 'courses'%}{{object.id}}/updateCourse"><button class="btn btn-primary">Update</button></a>
+		<a href="{%url 'courses'%}{{object.id}}/deleteCourse"><button class="btn btn-danger">Delete</button></a>
+	</div>
+	<div class="lessons">
+		<a class="button" href="{%url 'lessons'%}?cid={{object.id}}">
+			<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="60" viewBox="0 0 24 24" width="60"><g><path d="M0,0h24v24H0V0z" fill="none"/></g><g><polygon points="6.23,20.23 8,22 18,12 8,2 6.23,3.77 14.46,12"/></g></svg>
+		</a>
+	</div>
+	
+</div>
 {%endfor%}
 {%endblock%}

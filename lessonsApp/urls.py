@@ -15,15 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import views  
+from lessonsApp.views import createLesson
+from lessonsApp.views import lessons
+from lessonsApp.views import LessonsUpdateView
+from lessonsApp.views import LessonsDeleteView
 
 urlpatterns = [
-    path('', views.lessons,name="lessons"),
-    path('createLesson/', views.createLesson,name="createLesson"),
-    path('updateLesson/', views.updateLesson,name="updateLesson"),
-    path('updateLesson/<int:id>', views.updateLesson,name="updateLesson"),
-    path('deleteLesson/', views.deleteLesson,name="deleteLesson"),
-    path('deleteLesson/<int:id>', views.deleteLesson,name="deleteLesson"),
+    path('', lessons,name="lessons"),
+    path('createLesson/', createLesson,name="createLesson"),
+    path('<int:cid>/<int:id>/updateLesson', LessonsUpdateView.as_view(),name="updateLesson"),
+    path('<int:cid>/<int:id>/deleteLesson', LessonsDeleteView.as_view(),name="deleteLesson"),
     
     
 ]
