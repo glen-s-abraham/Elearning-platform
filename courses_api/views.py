@@ -1,27 +1,23 @@
 from rest_framework import viewsets
 from courses_api.serializers import CoursesSerializer
-
+from rest_framework.permissions import IsAuthenticated
 from courses_api import permissions
-
+from rest_framework.authentication import TokenAuthentication
 from coursesApp.models import Courses
 
 
 class CoursesView(viewsets.ModelViewSet):
 	serializer_class=CoursesSerializer
 	queryset=Courses.objects.all()
-	permission_classes=(permissions.IsAdminUser,)
+	authentication_classes = (TokenAuthentication,)
+	permission_classes=(permissions.IsAdminUser,IsAuthenticated)
 
 	def get_queryset(self):
 		"""Filter courses on streams and semester"""
-		streams=["MSC.CS","BSC.CS"]
-		semesters=["S1","S2","S3","S4","S5","S6"]
-
-		stream = self.request.query_params.get('stream', None)
-		sem = self.request.query_params.get('sem', None)
-
-		if stream in streams and sem in semesters:
-			return Courses.objects.filter(course=stream,semester=sem)
-
-		return Courses.objects.all()	
-
+		
+		user=self.request.user
+		stream = user.course
+		sem = user.semester
+		return Courses.objects.filter(course=stream,semester=sem)
+		
 

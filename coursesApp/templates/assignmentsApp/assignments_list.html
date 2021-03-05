@@ -1,0 +1,57 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<style>
+	
+	
+	.card{
+		width:100%;
+		height:80px;
+		margin: 10px;
+		box-shadow: 3px 3px 5px;
+	}
+
+	.title{
+		width: 60%;
+		height: 20%;
+		position: absolute;
+		left:20px;
+		top:10px;
+		
+	}
+
+	.controls{
+		
+		height: 20%;
+		position: absolute;
+		right:10px;
+		top:10px;
+		padding: 2px;
+		
+		
+	}
+	
+
+	
+
+</style>
+
+<h2>Assignments</h2>
+<a   href="{%url 'createAssignment'%}?cid={{course.id}}" class=" btn btn-primary">Create Assignment</a>
+
+{%for object in object_list%}
+<div class="card">
+	<div class="title">
+		<h3>{{object.topic}}</h1>
+	</div>	
+	<div class="controls">
+		<a href="{%url 'submissions'%}?aid={{object.id}}"><button class="btn btn-outline-primary">Vew Submissions</button></a>
+		<a href="{%url 'assignments'%}{{object.id}}/updateAssignment"><button class="btn btn-primary">Update</button></a>
+		<a href="{%url 'assignments'%}{{object.id}}/deleteAssignment"><button class="btn btn-danger">Delete</button></a>
+	</div>
+
+</div>
+
+
+{%endfor%}
+{%endblock%}

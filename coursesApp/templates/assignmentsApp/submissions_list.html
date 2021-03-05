@@ -1,0 +1,21 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<h1>{{assignment.topic}}</h1>
+<table class="table">
+  <thead class="thead-dark">
+	<tr>
+		<th>Submitted by</th>
+		<th>Date</th>
+		<th>File</th>
+	</tr>
+</thead>
+	{%for submission in submissions%}
+	<tr>
+		<th>{{submission.submitted_by}}</th>
+		<th>{{submission.date}}</th>
+		<th><a href="{{submission.file.url}}">View</a></th>
+	</tr>
+	{%endfor%}
+</table>
+{%endblock%}

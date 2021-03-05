@@ -5,7 +5,7 @@ from courses_api.views import CoursesView
 
 router=DefaultRouter()
 router.register('',CoursesView)
-router.register('<str:stream><sem:int>',CoursesView)
+
 
 urlpatterns=[
 	path('',include(router.urls)),

@@ -5,7 +5,7 @@ from lessons_api.views import LessonsView
 
 router=DefaultRouter()
 router.register('',LessonsView)
-router.register('<cid:int>',LessonsView)
+
 
 
 urlpatterns=[
