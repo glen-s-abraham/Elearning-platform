@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from userApp.models import User
 course_choices=semester_choices=[
 		('BSC.CS','Bsc computerScience'),
 		('MSC.CS','Msc computerScience'),

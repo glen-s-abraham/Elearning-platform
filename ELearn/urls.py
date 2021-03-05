@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('coursesApp.urls')),
     path('lessons/',include('lessonsApp.urls')),
+    path('assignments/',include('assignmentsApp.urls')),
     path('users/',include('userApp.urls')),
     path('api/courses/',include('courses_api.urls')),
     path('api/lessons/',include('lessons_api.urls'))

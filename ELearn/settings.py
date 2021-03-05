@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'rest_framework',
+    'assignmentsApp.apps.AssignmentsappConfig',
     'coursesApp.apps.CoursesappConfig',
     'lessonsApp.apps.LessonsappConfig',
     'userApp.apps.UserappConfig',
@@ -138,3 +139,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+AUTH_USER_MODEL='userApp.User'
