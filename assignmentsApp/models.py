@@ -32,6 +32,5 @@ class Submissions(models.Model):
 	file = models.FileField(upload_to='Assignments/')
 	date = models.DateTimeField(default=datetime.now, blank=True)
 	
-	
 	def __str__(self):
 		return str(self.submitted_by)

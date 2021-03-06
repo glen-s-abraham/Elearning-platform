@@ -8,7 +8,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 		fields=('id','email','name','course','semester','password')
 		extra_kwargs={
 			'password':{
-						'write_only':False,
+						'write_only':True,
 						'style':{'input_type':'password'}
 			}
 		}
