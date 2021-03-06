@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'assignmentsApp.apps.AssignmentsappConfig',
     'coursesApp.apps.CoursesappConfig',
     'lessonsApp.apps.LessonsappConfig',
+    'forumsApp.apps.ForumsappConfig',
     'userApp.apps.UserappConfig',
     'corsheaders',
 ]

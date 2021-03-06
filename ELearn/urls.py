@@ -23,6 +23,7 @@ urlpatterns = [
     path('',include('coursesApp.urls')),
     path('lessons/',include('lessonsApp.urls')),
     path('assignments/',include('assignmentsApp.urls')),
+    path('community/',include('forumsApp.urls')),
     path('users/',include('userApp.urls')),
     path('api/courses/',include('courses_api.urls')),
     path('api/lessons/',include('lessons_api.urls')),
