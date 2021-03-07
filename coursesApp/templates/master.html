@@ -37,18 +37,23 @@
       <li class="nav-item active">
         <a class="btn btn-primary" href="{%url 'createCourse'%}">Create Course</a>
       </li>
-     
+      &nbsp;&nbsp;
       <li class="nav-item active">
         <a class="nav-link" href="{%url 'courses'%}">My Courses <span class="sr-only">(current)</span></a>
       </li>
-
+      &nbsp;
       <li class="nav-item active">
         <a class="nav-link" href="{%url 'assignments'%}">My Assignments <span class="sr-only">(current)</span></a>
       </li>
-
+      &nbsp;
+       <li class="nav-item active">
+        <a class="nav-link" href="{%url 'threads'%}">Community <span class="sr-only">(current)</span></a>
+      </li>
+      &nbsp;
        <li class="nav-item active">
         <a class="nav-link" href="{%url 'logout'%}">Logout <span class="sr-only">(current)</span></a>
       </li>
+      &nbsp;
       {%else%}
       <li class="nav-item active">
         <a class="nav-link" href="{%url 'login'%}">Log in <span class="sr-only">(current)</span></a>
