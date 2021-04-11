@@ -1,0 +1,32 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+	
+
+
+
+<h2>{{thread.subject}}</h2>
+<h5>Posted by:{{thread.author}}</h5>
+<p>{{thread.descreption}}</p>
+<br><br>
+{%for reply in replies%}
+
+	<h5>Reply to:{{thread.subject}}&nbsp;by:&nbsp;{{reply.author}}</h1>
+		<p>{{reply.reply}}</p>
+	{% if reply.author == user %}
+		<a href="{%url 'deleteReply' thread.id reply.id %}">Delete</a>
+		
+	{% endif %}
+
+
+
+{%endfor%}
+{% load crispy_forms_tags %}
+<form enctype="multipart/form-data"  method="post" >
+    {% csrf_token %}
+    <input type="hidden" name="tid" value="{{thread.id}}">
+    {{ form|crispy }}
+    <input type="submit" value="Submit" class="btn btn-primary">
+</form>
+{%endblock%}

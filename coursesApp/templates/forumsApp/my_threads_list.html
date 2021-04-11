@@ -1,0 +1,23 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+<h1>Threads</h1>
+<table class="table">
+
+{%for object in object_list%}
+<tr>
+	
+	<td><a href="{%url 'replies'%}?tid={{object.id}}">{{object.subject}}</a></td>
+	<td>
+	<a href="{%url 'threads'%}{{object.id}}/updateThread"><button class="btn btn-primary">Update</button></a>
+	&nbsp;
+	<a href="{%url 'threads'%}{{object.id}}/deleteThread"><button class="btn btn-danger">Delete</button></a></td>
+		
+		
+
+</tr>
+	
+
+{%endfor%}
+{%endblock%}

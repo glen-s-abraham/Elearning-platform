@@ -1,0 +1,11 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<h4 style="margin-bottom: 1%;">Update Course</h4>
+{% load crispy_forms_tags %}
+<form enctype="multipart/form-data" method="post" >
+	{% csrf_token %}
+    <h1>Do you want to delete the course "{{object.subject}}"?</h1>
+    <input type="submit" value="Yes" class="btn btn-danger"><a href="/community/myThreads" class="btn btn-secondary">Cancel</a>
+</form>
+{%endblock%}

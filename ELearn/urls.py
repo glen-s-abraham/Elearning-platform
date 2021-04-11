@@ -29,6 +29,7 @@ urlpatterns = [
     path('api/lessons/',include('lessons_api.urls')),
     path('api/users/',include('studentsApi.urls')),
     path('api/assignments/',include('assignmentsApi.urls')),
+    path('api/community/',include('forumsApi.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

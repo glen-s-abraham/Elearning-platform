@@ -1,0 +1,22 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+<h1>Threads</h1><a   href="{%url 'createThread'%}" class=" btn btn-primary">Create Thread</a>
+<a   href="{%url 'myThreads'%}" class=" btn btn-outline-primary">My Threads</a>
+<br>
+<br>
+{%for object in object_list%}
+<div>	
+	
+	<a href="{%url 'replies'%}?tid={{object.id}}"><h5>{{object.subject}}</h5></a>
+	
+	
+		
+		
+</div>	
+<br>
+	
+
+{%endfor%}
+{%endblock%}
